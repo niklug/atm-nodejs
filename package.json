@@ -1,0 +1,11 @@
+{
+  "name": "atm-nodejs",
+  "version": "1.0.0",
+  "description": "Basic atm operations",
+  "main": "index.js",
+  "author": "Nikolay Korban",
+  "dependencies": {
+    "localStorage": "^1.0.3",
+    "prompt": "^1.0.0"
+  }
+}
