@@ -11,7 +11,9 @@ class ATMController {
 
   run() {
     prompt.get(promptSchemas.loginSchema, (err, result) => {
-      const isPinValid = this.checkPIN(result.pin);
+      if (err) { console.error(err); }
+
+      const isPinValid = this.validatePin(result.pin);
 
       if(isPinValid) {
         this.chooseOperation();
@@ -26,7 +28,7 @@ class ATMController {
     prompt.get(promptSchemas.chooseOperationSchema, this.operationsFlow.bind(this));
   }
 
-  checkPIN(pin) {
+  validatePin(pin) {
     const account = AccountService.getAccount(pin);
     if(account) {
       this.session.account = account;
@@ -36,20 +38,24 @@ class ATMController {
   }
 
   operationsFlow(err, result) {
+    if (err) { console.error(err); }
+    
     switch(result.operation) {
       case '1':
         const balance = ATMService.getBalance(this.session.account.pin);
-        console.log(`Your balance is $${balance}`.green);
+        ATMService.showBalance(balance);
         this.chooseOperation();
       break;
       case '2':
         prompt.get(promptSchemas.depositFundsSchema, (err, result) => {
+          if (err) { console.error(err); }
           ATMService.makeDeposit(this.session.account, result.amount);
           this.chooseOperation();
         });
       break;
       case '3':
         prompt.get(promptSchemas.withdrawFundsSchema, (err, result) => {
+          if (err) { console.error(err); }
           ATMService.makeWithdrawal(this.session.account, result.amount);
           this.chooseOperation();
         });
@@ -58,6 +64,10 @@ class ATMController {
       break;
     }
   }
+
+  clearScreen() {
+    process.stdout.write('\u001B[2J\u001B[0;0f');
+  };
 }
 
 module.exports = ATMController;

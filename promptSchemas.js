@@ -5,7 +5,7 @@ const promptSchemas = {
     properties: {
       'pin': {
         description: 'ENTER your pin please'.blue,
-        pattern: /^[0-9][0-9][0-9][0-9]$/,
+        pattern: /^[0-9]{4}$/,
         message: 'pin must be 4 digit number..'.red,
         required: true,
         hidden: true

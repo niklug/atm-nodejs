@@ -13,3 +13,5 @@ $ npm install
 ## Launch Program
 
 $ node index.js
+
+### correct  pin of the predefined account is `1234`

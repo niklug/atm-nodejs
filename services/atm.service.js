@@ -17,11 +17,15 @@ class ATMService {
     const currentBalance = ATMService.getBalance(account.pin);
     const newBalance = parseFloat(currentBalance) - parseFloat(amount);
     if(newBalance < 0) {
-      console.log('Withdrawal error, not enough cash');
+      console.log('Withdrawal error, not enough cash'.red);
       return false;
     }
     account.balance = newBalance;
     accountService.setAccount(account.pin, account);
+  }
+
+  static showBalance(value) {
+    console.log(`Your balance is $${value}`.green);
   }
 }
 
