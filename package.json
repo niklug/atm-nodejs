@@ -5,6 +5,7 @@
   "main": "index.js",
   "author": "Nikolay Korban",
   "dependencies": {
+    "colors": "^1.1.2",
     "localStorage": "^1.0.3",
     "prompt": "^1.0.0"
   }

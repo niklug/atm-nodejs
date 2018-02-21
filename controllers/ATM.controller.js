@@ -1,5 +1,5 @@
 const prompt = require('prompt');
-
+const promptSchemas = require('../promptSchemas');
 const ATMService = require('../services/atm.service');
 const AccountService = require('../services/account.service');
 
@@ -10,24 +10,20 @@ class ATMController {
   }
 
   run() {
-    console.log(' ENTER your PIN please ');
-    prompt.get(['pin'], (err, result) => {
-      const pin = result.pin;
-
-      const isPinValid = this.checkPIN(pin);
+    prompt.get(promptSchemas.loginSchema, (err, result) => {
+      const isPinValid = this.checkPIN(result.pin);
 
       if(isPinValid) {
         this.chooseOperation();
       } else {
-        console.log('PIN is not valid, ');
+        console.log('pin is not valid, '.red);
         this.run();
       }
     });
   }
 
   chooseOperation() {
-    console.log('Choose operation: 1 - get balance, 2 - make deposit, 3 - make withdrawal, 4 - exit.');
-    prompt.get(['operation'], this.operationsFlow.bind(this));
+    prompt.get(promptSchemas.chooseOperationSchema, this.operationsFlow.bind(this));
   }
 
   checkPIN(pin) {
@@ -43,19 +39,17 @@ class ATMController {
     switch(result.operation) {
       case '1':
         const balance = ATMService.getBalance(this.session.account.pin);
-        console.log(`Your balance is ${balance}`);
+        console.log(`Your balance is $${balance}`.green);
         this.chooseOperation();
       break;
       case '2':
-        console.log('Set deposit amount');
-        prompt.get(['amount'], (err, result) => {
+        prompt.get(promptSchemas.depositFundsSchema, (err, result) => {
           ATMService.makeDeposit(this.session.account, result.amount);
           this.chooseOperation();
         });
       break;
       case '3':
-        console.log('Make withdrawal, set amount');
-        prompt.get(['amount'], (err, result) => {
+        prompt.get(promptSchemas.withdrawFundsSchema, (err, result) => {
           ATMService.makeWithdrawal(this.session.account, result.amount);
           this.chooseOperation();
         });
