@@ -7,6 +7,8 @@ AccountService.initDefaultAccount();
 
 const ATMInstance = new ATM();
 
+console.log('test');
+
 ATMInstance.run();
 
 
