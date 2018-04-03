@@ -4,6 +4,7 @@
   "description": "Basic atm operations",
   "main": "index.js",
   "author": "Nikolay Korban",
+  "homepage": "https://niklug.github.io/atm-nodejs",
   "dependencies": {
     "colors": "^1.1.2",
     "localStorage": "^1.0.3",
