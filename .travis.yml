@@ -1,0 +1,33 @@
+language: node_js 
+
+dist: trusty
+sudo: false
+
+node_js:
+  - "8.7.0"
+
+cache:
+  directories:
+    - node_modules
+
+env:
+  global:
+    - DISPLAY=:99.0
+    - RASH_HOME=$TRAVIS_BUILD_DIR
+    - PATH=$PATH:$NODE_PATH/bin
+    - NODE_PATH=$RASH_HOME
+    - NODE_ENV=travis
+
+before_install:
+  - . $HOME/.nvm/nvm.sh
+  - nvm install 8.7.0
+  - nvm use 8.7.0
+  - sudo mkdir -p /var/log/spanning
+  - sudo chmod -R a+rw /var/log/spanning
+
+  before_script:
+  - env | sort
+
+script:
+  - cd $RASH_HOME
+  - npm install
